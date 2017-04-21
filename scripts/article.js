@@ -5,7 +5,13 @@ var articles = [];
 function Article (opts) {
   // TODO: Use the JS object passed in to complete this constructor function:
   // Save ALL the properties of `opts` into `this`
-}
+this.title = opts.title;
+this.catagory = opts.catagory;
+this.author = opts.author;
+this.authorUrl = opts.authorUrl;
+this.publishedOn = opts.publishedOn;
+this.body = opts.body;
+};
 
 Article.prototype.toHtml = function() {
   var $newArticle = $('article.template').clone();
@@ -13,6 +19,7 @@ Article.prototype.toHtml = function() {
   However, in our modules.css stylesheet, we gave all elements
   with a class of template a display of none. Let's make
   sure we're not accidentally hiding our cloned article! */
+$newArticle.removeClass('template');
 
   if (!this.publishedOn) $newArticle.addClass('draft');
   $newArticle.data('category', this.category);
@@ -25,6 +32,12 @@ Article.prototype.toHtml = function() {
     3. article title,
     4. article body, and
     5. publication date. */
+
+$('#articles').find('h1').html(this.title);
+$('#articles').find('a').html(this.author);
+$('#articles').find('[href]').html(this.authorUrl);
+$('.article-body').html(this.body);
+$('#articles').find('time').html(this.publishedOn);
 
   // Display the date as a relative number of 'days ago'
   $newArticle.find('time').html('about ' + parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000) + ' days ago');
